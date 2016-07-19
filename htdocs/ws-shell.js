@@ -14,7 +14,7 @@ function Shell(o) {
         container.html('');
 
         self.shell = $('<div id="shell"></div>').appendTo( container );;
-        self.shellCursor = $('<div id="shell-cursor" class="animated"></div>').appendTo( container );
+        self.shellCursor = $('<div id="shell-cursor" class="blink"></div>').appendTo( container );
 
         var spaces = '';
         for (var i = 1; i <= self.width; i++) {
@@ -30,6 +30,7 @@ function Shell(o) {
 
     self.bind = function() {
         $(document).bind('keyup', function (e) {
+			$("#shell-cursor").addClass("blink")        
             var code = e.keyCode || e.which;
             if (code == 27) {
                 self.sendMessage({"type":"key","code":code});
@@ -37,6 +38,7 @@ function Shell(o) {
         });
 
         $(document).bind('keypress', function(e) {
+			$("#shell-cursor").removeClass("blink")
 			if ( e.keyCode ) {
 				self.sendMessage({"type":"key","code":e.keyCode});
 			} else if ( e.charCode ) {

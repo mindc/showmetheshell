@@ -16,7 +16,7 @@
 
 #shell-cursor:after{
 	content: '#';
-	color:lime;
+	color:transparent;
 }
 
 #menu {
@@ -91,8 +91,7 @@
 }
 
 #shell-cursor {
-  color: #0F0;
-	background: #0F0;
+	background: rgba(0,255,0,0.7);
 }
 #shell-cursor.blink {
   animation: blink 1s steps(1,end) infinite;

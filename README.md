@@ -10,4 +10,4 @@ This work is based on https://github.com/vti/showmetheshell
   - You dont't have controll with which terminal you connect to.
   - If you open more then one connection, strange things happens (like ghost terminals)
   - `IO::Tty::Util::forkpty` **creates** new pseudoterminal for every new connection
-- Cursor works :)
+- Cursor and F-keys works :)
