@@ -1,5 +1,6 @@
 # Remote shell using Net::Async::WebSocket
 
+<<<<<<< HEAD
 This work is based on https://github.com/vti/showmetheshell
 
 ## Changes
@@ -17,3 +18,6 @@ This work is based on https://github.com/vti/showmetheshell
 	connection
 	
 - Cursor works :)
+=======
+This work is based on https://github.com/vti/showmetheshell
+>>>>>>> parent of d94bc01... README edit
