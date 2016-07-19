@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link href="ws-shell.css" rel="stylesheet" type="text/css" />
+<style type="text/css">
+body,html { margin:0;;height:100vh;}
+
+body {
+	font-size:11px;
+	font-family:Tahoma;
+}
+
+#debug {
+	margin:0;
+	height:calc( 100vh - 600px );
+	font-family:"Lucida Console";
+	white-space:pre-wrap;
+	font-size:8pt;
+	overflow:auto;
+}
+
+.debug {
+	color: silver;
+	background-color:#333;
+}
+
+.number {   color:#800080;}
+.string {   color:#008000;}
+.key {  font-weight:bold;}
+.null { color:#ff0000;}
+
+
+.sc { color:lime}
+.cs { color:yellow }
+
+.online { color:lime }
+.offline { color:red }
+
+.bars { width:1px; background-color:darkred; float:left };
+
+#shell {
+	box-shadow: 1px 1px 3px black;
+}
+
+#container {
+	position: relative;
+	margin:10px;
+	height:600px;
+	white-space:pre-wrap;
+	font-family: "Lucida Console";
+	font-size:9pt;
+	line-height:100%;
+}
+
+
+</style>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="ws-shell-config.js"></script>
+<script type="text/javascript" src="ws-shell.js"></script>
+<script>
+
+$(function(){
+	var shell = new Shell();
+    var ws = new WebSocket( WS_URL );
+
+    ws.onerror = function(e){  
+//		$("#debug").prepend("[ERROR] " + JSON.stringify(e) + "\n")
+	}
+
+    ws.onmessage = function(e){
+		var dataj = e.data
+
+                    if (typeof dataj == 'undefined' || dataj === null)
+                        return;
+					try {
+	                    data = JSON.parse(dataj);
+						DEBUG && $("#debug").prepend( data.type == 'debug' ? '<div class="debug">[DEBUG] ' + dataj + '</div>' : '[MESSAGE] ' + dataj + '\n' )
+					} catch (e) {}
+
+                    if (data.type == 'history') {
+                        for (var i = 0; i < data.history.length; i++) {
+                            shell.updateRow(i + 1, data.history[i]);
+                        }
+                    }
+                    else if (data.type == 'row') {
+                        shell.updateRow(data.row, data.text);
+                    }
+                    else if (data.type == 'cursor') {
+                        shell.moveCursor(data.x, data.y);
+                    }
+
+    }
+
+                shell.onsend = function(message) {
+//					$("#debug").prepend( '[KEYS] ' + message + '\n' )
+                    ws.send(message);
+                };
+
+    ws.onopen = function(e){
+		DEBUG && $("#debug").prepend('<div style="background-color:lime">[OPEN]</div>')
+		shell.init();
+    }
+
+    ws.onclose = function(e){
+		DEBUG && $("#debug").prepend('<div style="background-color:red">[CLOSE]</div>')
+    }
+
+})
+
+</script>
+</head>
+<body>
+<div id="container"></div>
+<div id="debug"></div>
+</body>
+</html>
