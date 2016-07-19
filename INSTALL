@@ -1,0 +1,19 @@
+Showmetheshell installation steps:
+
+    * Clone repository
+
+        git clone --recursive http://github.com/mindc/showmetheshell.git
+
+    * Install Perl dependencies from CPAN (requires root privileges; for
+      installing them as a local user read more about App::cpanminus;
+      on Debian/Ubuntu is simple as `apt-get install cpanminus`)
+
+		cpanm --sudo IO::Tty::Util Term::VT102 JSON::XS Plack \
+			Net::Async::HTTP::Server HTML::FromANSI::Tiny
+
+    * Start the server
+
+        plackup -s Net::Async::HTTP::Server \
+			--listen "127.0.0.1:8080" shell.psgi
+
+    * Open file "ws-shell.html" in your browser
