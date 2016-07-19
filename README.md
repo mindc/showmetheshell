@@ -1,6 +1,5 @@
 # Remote shell using Net::Async::WebSocket
 
-<<<<<<< HEAD
 This work is based on https://github.com/vti/showmetheshell
 
 ## Changes
@@ -9,7 +8,7 @@ This work is based on https://github.com/vti/showmetheshell
 - Using IO::Tty::Util over IO::Pty
 	IO::Pty create pipe only with already opened terminal.
 	
-	You dont't have controll with terminal you connect to.
+	You dont't have controll with which terminal you connect to.
 	
 	If you open more then one connection, strange things happens 
 	(like ghost terminals)
@@ -18,6 +17,3 @@ This work is based on https://github.com/vti/showmetheshell
 	connection
 	
 - Cursor works :)
-=======
-This work is based on https://github.com/vti/showmetheshell
->>>>>>> parent of d94bc01... README edit
