@@ -53,9 +53,9 @@ body {
 	line-height:100%;
 }
 
-
 </style>
 <script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="keycode.js"></script>
 <script type="text/javascript" src="ws-shell-config-default.js"></script>
 <script type="text/javascript" src="ws-shell-config.js"></script>
 <script type="text/javascript" src="ws-shell.js"></script>
@@ -68,7 +68,6 @@ $(function(){
     ws.onerror = function(e){  
 //		$("#debug").prepend("[ERROR] " + JSON.stringify(e) + "\n")
 	}
-
     ws.onmessage = function(e){
 		var dataj = e.data
 
@@ -94,7 +93,7 @@ $(function(){
     }
 
                 shell.onsend = function(message) {
-//					$("#debug").prepend( '[KEYS] ' + message + '\n' )
+					DEBUG && $("#debug").prepend( '<div style="background-color:lightyellow">[KEY] ' + message + '</div>' )
                     ws.send(message);
                 };
 
