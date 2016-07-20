@@ -29,75 +29,32 @@ function Shell(o) {
     };
 
     self.bind = function() {
-        $(document).bind('keyup', function (e) {
-        
-			$("#shell-cursor").addClass("blink")        
-            var code = e.keyCode || e.which;
-            if (code == 27) {
-                self.sendMessage({"type":"key","code":code});
-            }
-        });
-
-        $(document).keydown(function (e) {
-			DEBUG && console.log( "KEYDOWN => keyCode: " +  e.keyCode + ", charCode: " + e.charCode + ", which: " + e.which )        
-            var code = (e.keyCode ? e.keyCode : e.which);
-            switch ( code ) {
-				case 8:
-				case 9:
-				case 13:
-				case 33:
-				case 34:
-				case 35:
-				case 36:
-				case 37:
-				case 38:
-				case 39:
-				case 40:
-				case 45:
-				case 46:
-				
-				case 112:
-				case 113:
-				case 114:
-				case 115:
-				case 116:
-				case 117:
-				case 118:
-				case 119:
-				case 120:
-				case 121:
-				case 122:
-				case 123:
-					self.sendMessage({"type":"key","code":code});
-					return false;
-				default:
-            }
-        })
-
-
-
-        $(document).bind('keypress', function(e) {
-			DEBUG && console.log( "KEYPRESS => keyCode: " +  e.keyCode + ", charCode: " + e.charCode + ", which: " + e.which )        
-			$("#shell-cursor").removeClass("blink")
-//			if ( e.keyCode ) {
-	//			self.sendMessage({"type":"key","code":e.keyCode});
-			//} else if ( e.charCode ) {
-				code = e.charCode;
-
-				if ( e.ctrlKey ) {
-					if ( code >= 97 ) {
-						code -= 96
+		$(document).bind({
+			keydown: function( e ) {
+				if ( e.keyCode == 16 || e.keyCode == 17 || e.keyCode == 18 ) return
+				var code = e.key.charCodeAt()
+				if ( e.key.length > 1 ) {
+					self.sendMessage({"type":"key","code":e.keyCode});			
+				} else {
+					if ( e.ctrlKey && code > 96 && code <= 127)
+						code -= 96			
+						
+					if ( code > 127 ) {
+						self.sendMessage({"type":"key","code":code});					
+					} else {	
+						self.sendMessage({"type":"char","code":code});
 					}
+					
+					
 				}
-				self.sendMessage({"type":"char","code":code});
-		//	}
-
-            return false;
-        });
-
+				return false
+			}
+			
+		})
     };
 
     self.sendMessage = function (message) {
+		DEBUG && $('#debug').prepend('<div style="background-color:lightyellow">[SEND] '+JSON.stringify( message )+'</div>')
         self.onsend( JSON.stringify( message ) );
     };
 
