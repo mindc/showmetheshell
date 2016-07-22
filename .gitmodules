@@ -1,0 +1,3 @@
+[submodule "websocket"]
+	path = websocket
+	url = https://github.com/mindc/plack-app-net-async-websocket
