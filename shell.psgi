@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 
-use lib qw( lib/ );
+use lib qw( plack-app-net-async-websocket/lib/ );
 use Plack::App::Net::Async::WebSocket;
 use JSON::XS;
 use HTML::FromANSI::Tiny;
